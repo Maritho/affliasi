@@ -7,7 +7,7 @@
             <img src="https://moladin.com/images/moladin-logo-nav.png" class="img-fluid" alt="Moladin.com">
           </div>
           <div class="col-md-6">
-            <p class="login-box-msg">Program Afiliasi</p>
+            <p class="login-box-msg">Pendaftaran</p>
             <div v-if="error !== null" class="alert alert-warning alert-dismissible fade show" role="alert">
               {{error}}
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -19,7 +19,25 @@
                 <div class="input-group-append blank">
                     <span class="fa fa-user input-group-text"></span>
                 </div>
-                <input type="text" v-model="email" class="form-control" placeholder="Username">
+                <input type="text" v-model="name" class="form-control" placeholder="Nama Lengkap">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-append blank">
+                  <span class="fa fa-envelope input-group-text"></span>
+                </div>
+                <input type="text" v-model="email" class="form-control" placeholder="Email">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-append blank">
+                  <span class="fa fa-phone input-group-text"></span>
+                </div>
+                <input type="text" v-model="phone" class="form-control" placeholder="Nomor Telepone">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-append blank">
+                  <span class="fa fa-globe input-group-text"></span>
+                </div>
+                <input type="url" v-model="url_blog" class="form-control" placeholder="URL Blog">
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-append blank">
@@ -27,9 +45,9 @@
                 </div>
                 <input type="password" v-model="password" class="form-control" placeholder="Password">
               </div>
-              <p class="text-white">Perlu Akun Baru ? <nuxt-link class="text-warning" to="/register">Daftar</nuxt-link></p>
+              <p class="text-white">Sudah Punya Akun ? <nuxt-link class="text-warning" to="/">Login</nuxt-link></p>
               <button class="btn btn-block btn-pln-default">
-                Login
+                Daftar
               </button>
             </form>
           </div>
@@ -51,9 +69,11 @@ export default {
   },
   data() {
     return {
+      name: '',
       email: '',
+      phone: '',
+      url_blog: '',
       password: '',
-      device_id: 'web',
       error: null
     }
   },
@@ -61,14 +81,20 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password,
-            device_id: this.device_id
+        await this.$axios.$post('/auth/register', {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          url_blog: this.url_blog,
+          password: this.password,
+        }).then(response => {
+          if (response.status) {
+            this.$swal('Sukses', 'Pendaftaran Berhasil', 'success')
+            this.$router.push('/')
+          } else {
+            this.error = response.message
           }
         })
-        this.$router.push('/dashboard/affliasi')
       } catch (e) {
         this.error = e.response.data.message
       }

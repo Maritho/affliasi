@@ -7,11 +7,11 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'Moladin CRM',
+    title: 'Moladin Affliate',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Moladin CRM Tools' },
+      { hid: 'description', name: 'description', content: 'Moladin Affliate Tools' },
       { name: 'robots', content: 'noindex' }
     ],
     link: [
@@ -58,7 +58,7 @@ export default {
   ],
 
   axios: {
-    baseURL: process.env.BASE_URL_B2B,
+    baseURL: process.env.BASE_URL,
     proxyHeaders: false,
     credentials: false
   },
@@ -68,16 +68,15 @@ export default {
       login: '/',
       logout: '/',
       callback: '/',
-      home: '/dashboard/dana-tunai/pooling'
+      home: '/dashboard/affliasi'
     },
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+          login: { url: '/auth/login', method: 'post', propertyName: 'result.token' },
           logout: { url: '/auth/logout', method: 'post' },
-          user: { url: '/auth/check', method: 'get', propertyName: 'data' }
-        },
-        tokenType: false
+          user: { url: '/auth/me', method: 'get', propertyName: 'result' }
+        }
       }
     }
   },

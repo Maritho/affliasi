@@ -8,7 +8,7 @@
   export default {
     head: {
       script: [
-        { src: '/affliasi.js' }
+        { src: '/client.js' }
       ]
     }
   }
