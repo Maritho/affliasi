@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -18,6 +19,12 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * appends attribute pendapatan
+     * @var array
+     */
+    public $appends = ['pendapatan'];
 
     /**
      * @return mixed
@@ -35,5 +42,14 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * set value pendapatan
+     */
+    public function getPendapatanAttribute()
+    {
+        $user_id = Arr::get($this, 'id');
+        return (integer) Transaction::where('user_id', $user_id)->where('status', 1)->sum('commision');
     }
 }

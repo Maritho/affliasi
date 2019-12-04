@@ -68,7 +68,11 @@ export default {
             device_id: this.device_id
           }
         })
-        this.$router.push('/dashboard/affliasi')
+        if (this.$store.state.auth.user.role == 'admin') {
+          this.$router.push('/dashboard/affliasi')
+        } else {
+          this.$router.push('/dashboard/affliasi/summary')
+        }
       } catch (e) {
         this.error = e.response.data.message
       }

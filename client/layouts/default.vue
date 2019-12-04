@@ -23,7 +23,7 @@
           </li>
         </ul>
       </nav>
-      <aside class="main-sidebar sidebar-light-primary" style="min-height: 669.043px;">
+      <aside class="main-sidebar elevation-3 sidebar-light-primary" style="min-height: 669.043px;">
         <nuxt-link to="/dashboard/affliasi" class="brand-link bg-primary">
           <img
             src="https://moladin.com/images/moladin-logo-nav.png"
@@ -95,6 +95,7 @@
         <nuxt-link to="/">Moladin.com</nuxt-link>.
       </strong> All rights reserved.
     </footer>
+
   </div>
 </template>
 

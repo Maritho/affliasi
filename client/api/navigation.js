@@ -12,17 +12,17 @@ const nav = {
           {
             name: 'Campaign',
             icon: 'fa fa-circle-o',
-            url: '/dashboard/affliate'
+            url: '/dashboard/affliasi/campaign'
           },
           {
             name: 'Blogger',
             icon: 'fa fa-circle-o',
-            url: '/dashboard/affliate'
+            url: '/dashboard/affliasi/blogger'
           },
           {
             name: 'Penarikan',
             icon: 'fa fa-circle-o',
-            url: '/dashboard/affliate'
+            url: '/dashboard/affliasi/penarikan'
           }
         ]
       }

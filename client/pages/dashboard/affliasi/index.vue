@@ -1,15 +1,13 @@
 <template>
-  <div class="content-wrapper" style="min-height: 700px;">
-    <div id="affiliate-moladin" data-affliate-id="32432434" data-width="200" data-height="100"></div>
+  <div class="content-wrapper" style="min-height: 640px">
+
+    <h1 class="text-center" style="margin-top: 25%">Selamat Datang Kembali {{ this.$auth.$state.user.name }}</h1>
+
   </div>
 </template>
 
 <script>
   export default {
-    head: {
-      script: [
-        { src: '/client.js' }
-      ]
-    }
+
   }
 </script>
