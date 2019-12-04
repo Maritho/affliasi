@@ -23,7 +23,9 @@ function generatorImage() {
     };
 
     setInterval(function () {
-      up[i].appendChild(img);
+      if (up[i] != 'undefined') {
+        up[i].appendChild(img);
+      }
     }, 1000);
   }
 }
