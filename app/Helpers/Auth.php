@@ -11,7 +11,7 @@ class Auth
         $user = auth('api')->user();
 
         if ($user_id) {
-            return $user->id;
+            return $user->id_user;
         }
 
         return $user;

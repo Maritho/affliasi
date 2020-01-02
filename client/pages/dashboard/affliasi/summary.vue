@@ -156,11 +156,11 @@
         datatable: {
           instance: 'tableData',
           columns: [
-            {class: 'text-center', orderable: false, searchable: false, data: 'id', title: 'No.'},
+            {class: 'text-center', orderable: false, searchable: false, data: 'id_transaction', title: 'No.'},
             {class: 'text-center', data: 'ip', title: 'Pengguna'},
             {class: 'text-center', data: 'created_at', title: 'Tanggal'},
-            {class: 'text-center', data: 'total', title: 'Total Belanja'},
-            {class: 'text-center', data: 'commision', title: 'Komisi'},
+            {class: 'text-center', data: 'total_belanja', title: 'Total Belanja'},
+            {class: 'text-center', data: 'komisi', title: 'Komisi'},
             {class: 'text-center', data: 'cookie', title: 'Cookies'}
           ],
           ajax: {

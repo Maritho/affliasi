@@ -31,7 +31,7 @@ class PenarikanController extends Controller
         }
 
         $p = new Penarikan();
-        $p->user_id = $user['id'];
+        $p->user_id = $user['id_user'];
         $p->saldo = $user['pendapatan'];
         $p->penarikan = intval($request->jumlah);
         $p->save();
@@ -51,20 +51,20 @@ class PenarikanController extends Controller
 
     public function detail($id)
     {
-        $penarikan = Penarikan::select('penarikans.*', 'users.name', 'users.url_blog')->leftJoin('users', 'penarikans.user_id', '=', 'users.id')
-            ->where('penarikans.id', $id)->first();
+        $penarikan = Penarikan::select('penarikans.*', 'users.name', 'users.url_blog')->leftJoin('users', 'penarikans.user_id', '=', 'users.id_user')
+            ->where('penarikans.id_penarikan', $id)->first();
         return Response::toJson($penarikan);
     }
 
     public function all(Request $request)
     {
-        $penarikan = Penarikan::select('penarikans.*', 'users.name')->leftJoin('users', 'penarikans.user_id', '=', 'users.id');
+        $penarikan = Penarikan::select('penarikans.*', 'users.name')->leftJoin('users', 'penarikans.user_id', '=', 'users.id_user');
         return DataTables::of($penarikan)->make(true);
     }
 
     public function change_status(Request $request, $id)
     {
-        $penarikan = Penarikan::where('id', $id)->first();
+        $penarikan = Penarikan::where('id_penarikan', $id)->first();
         $penarikan->status = $request->status;
         $penarikan->save();
 

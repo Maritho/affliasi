@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Helpers\Response;
+use App\Models\BloggerViewSummary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,7 @@ class AuthController extends Controller
 
         $user_id = Auth::user($request, true);
 
-        $user = User::where('id', $user_id)->first();
+        $user = User::where('id_user', $user_id)->first();
         $user->rekening_name = $request->rekening_name;
         $user->rekening_number = $request->rekening_number;
         $user->rekening_bank = $request->rekening_bank;
@@ -98,20 +99,20 @@ class AuthController extends Controller
 
     public function blogger(Request $request)
     {
-        $blogger = DB::table('blogger_view_summary');
+        $blogger = BloggerViewSummary::select('id_user', 'name', 'blogs.url_blog', 'status', 'total_pendapatan', 'total_klik');
         return DataTables::of($blogger)->make(true);
     }
 
     public function blogger_delete($id) {
 
-        User::where('id', $id)->delete();
+        User::where('id_user', $id)->delete();
         return Response::toJson();
 
     }
 
     public function change_status($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id_user', $id)->first();
 
         if ($user->status == 1) {
             $user->status = 0;

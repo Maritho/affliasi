@@ -15,7 +15,7 @@ class TransactionController extends Controller
         $user = Auth::user($request);
         $user_id = null;
         if ($user->role == 'affliate') {
-            $user_id = $user->id;
+            $user_id = $user->id_user;
         }
 
         $transaction = Transaction::when($user_id, function ($query, $user_id) {

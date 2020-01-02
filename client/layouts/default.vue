@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <template v-if="this.$store.state.auth.user.role == 'admin'">
+    <template v-if="this.$store.state.auth.user.role.name == 'admin'">
       <nav class="main-header navbar navbar-expand bg-white navbar-white border-bottom">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -44,7 +44,7 @@
               data-widget="treeview"
               role="menu"
               data-accordion="false">
-              <template v-for="(item, index) in navigation[this.$store.state.auth.user.role].nav">
+              <template v-for="(item, index) in navigation[this.$store.state.auth.user.role.name].nav">
                 <span class="sidebar-title mb-1" :key="index+'_name'">{{item.parent}}</span>
                 <li v-for="(child, key) in item.nav" class="nav-item has-treeview" :key="key+'_child_'+index">
                   <nuxt-link :to="child.url" class="nav-link">
@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      class: nav[this.$store.state.auth.user.role].class,
+      class: nav[this.$store.state.auth.user.role.name].class,
       navigation: nav
     };
   },
@@ -130,7 +130,7 @@ export default {
     }
   },
   mounted() {
-    if(this.$store.state.auth.user.role == undefined || nav[this.$store.state.auth.user.role] == undefined) {
+    if(this.$store.state.auth.user.role.name == undefined || nav[this.$store.state.auth.user.role.name] == undefined) {
       this.logout();
     };
   }

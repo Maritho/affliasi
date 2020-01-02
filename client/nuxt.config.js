@@ -15,11 +15,11 @@ export default {
       { name: 'robots', content: 'noindex' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: 'https://moladin.com/favicon.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ],
     script: [
       {
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js'
+        src: '/popper/dist/umd/popper.min.js'
       }
     ]
   },

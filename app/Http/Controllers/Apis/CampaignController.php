@@ -16,7 +16,7 @@ class CampaignController extends Controller
     public function all(Request $request)
     {
         $campaign = Campaign::select('campaigns.*', 'users.name as user_name')
-            ->leftJoin('users', 'campaigns.created_by', '=', 'users.id');
+            ->leftJoin('users', 'campaigns.created_by', '=', 'users.id_user');
 
         return DataTables::of($campaign)->make(true);
     }
@@ -65,7 +65,7 @@ class CampaignController extends Controller
         }
 
 
-        $campaign = Campaign::where('id', $request->id)->first();
+        $campaign = Campaign::where('id_campaign', $request->id)->first();
         $image = $campaign->image;
 
         if ($request->hasFile('image')) {
@@ -84,12 +84,12 @@ class CampaignController extends Controller
     }
 
     public function delete($id) {
-        Campaign::where('id', $id)->delete();
+        Campaign::where('id_campaign', $id)->delete();
         return Response::toJson();
     }
 
     public function detail($id) {
-        $campaign = Campaign::where('id', $id)->first();
+        $campaign = Campaign::where('id_campaign', $id)->first();
         return Response::toJson($campaign);
     }
 }

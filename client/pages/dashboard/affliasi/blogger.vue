@@ -37,14 +37,14 @@
         datatable: {
           instance: 'tableDataBlogger',
           columns: [
-            {class: 'text-center', orderable: false, searchable: false, data: 'id', title: 'No.'},
+            {class: 'text-center', orderable: false, searchable: false, data: 'id_user', title: 'No.'},
             {data: 'name', title: 'Nama'},
-            {data: 'url_blog', title: 'URL Blog',
+            {data: 'url_blog', name: 'blogs.url_blog', title: 'URL Blog',
               render: function ( data, type, row, meta ) {
                 return '<a href="'+data+'">'+data+'</a>';
               }
             },
-            {class: 'text-center', data: 'id', title: 'Status',
+            {class: 'text-center', data: 'id_user', title: 'Status',
               render: function ( data, type, row, meta ) {
                 if (row.status == 1) {
                   return '<a href="javascript:void(0)" class="badge badge-success edit-status">Aktif</a>';

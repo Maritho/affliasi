@@ -11,6 +11,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    protected $primaryKey = 'id_user';
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -24,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * appends attribute pendapatan
      * @var array
      */
-    public $appends = ['pendapatan'];
+    public $appends = ['pendapatan', 'role'];
 
     /**
      * @return mixed
@@ -50,6 +52,11 @@ class User extends Authenticatable implements JWTSubject
     public function getPendapatanAttribute()
     {
         $user_id = Arr::get($this, 'id');
-        return (integer) Transaction::where('user_id', $user_id)->where('status', 1)->sum('commision');
+        return (integer) Transaction::where('user_id', $user_id)->where('status', 1)->sum('komisi');
+    }
+
+    public function getRoleAttribute() {
+        $role_id = Arr::get($this->attributes, 'id_role');
+        return Role::where('id_role', $role_id)->first();
     }
 }
