@@ -42,7 +42,7 @@ export default {
     { src: '~/assets/scss/main.scss', lang: 'scss' },
     { src: 'font-awesome/scss/font-awesome.scss', lang: 'scss' },
     { src: '~/assets/css/vue-select.css', lang: 'css' },
-    { src: '~/assets/css/dataTables.bootstrap4.min.css', lang: 'css' },
+    { src: '~/assets/css/dataTables.bootstrap4.min.css', lang: 'css' }
   ],
 
   /*
@@ -54,7 +54,8 @@ export default {
     { src: '~/plugins/jquery.dataTables.min.js', ssr: false },
     { src: '~/plugins/dataTables.bootstrap4.min.js', ssr: false },
     { src: '~/plugins/sweetalert.js', ssr: false },
-    { src: '~/plugins/vue-multiselect.js', ssr: false }
+    { src: '~/plugins/vue-multiselect.js', ssr: false },
+    { src: '~/plugins/axios.js', ssr: false }
   ],
 
   axios: {

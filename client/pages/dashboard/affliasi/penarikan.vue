@@ -1,21 +1,17 @@
 <template>
   <div class="content-wrapper" style="min-height: 640px">
     <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"> Penarikan</h1>
-          </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark"> Penarikan</h1>
         </div>
       </div>
     </div>
     <div class="content">
-      <div class="container">
-        <div class="card">
-          <div class="card-body">
-            <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
-                        :footer="true"></Datatables>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
+                      :footer="true"></Datatables>
         </div>
       </div>
     </div>
@@ -74,7 +70,7 @@
       return {
         show_modal_penarikan: false,
         form: {
-          id: null,
+          id_penarikan: null,
           blogger: '',
           tanggal: '',
           url_blog: '',
@@ -85,7 +81,7 @@
         datatable: {
           instance: 'tableDataPenarikan',
           columns: [
-            {class: 'text-center', orderable: false, searchable: false, data: 'id', title: 'No.'},
+            {class: 'text-center', orderable: false, searchable: false, data: 'id_penarikan', title: 'No.'},
             {data: 'name', name: 'users.name', title: 'Nama'},
             {class: 'text-center', data: 'saldo', title: 'Saldo'},
             {class: 'text-center', data: 'penarikan', title: 'Saldo'},
@@ -103,7 +99,7 @@
               }
             },
             {
-              class: 'text-center', data: 'id', title: 'Aksi',
+              class: 'text-center', data: 'id_penarikan', title: 'Aksi', searchable: false, orderable: false,
               render: function (data, type, row, meta) {
                 return '<button class="btn btn-primary btn-sm btn-secondary edit-action"><i class="fa fa-edit"></i></button>';
               }
@@ -122,11 +118,12 @@
     methods: {
       async handlerPenarikan(value) {
         this.form.status = value;
-        await this.$axios.$put('/penarikan/change-status/' + this.form.id, this.form)
+        await this.$axios.$put('/penarikan/change-status/' + this.form.id_penarikan, this.form)
           .then(response => {
             if (response.status) {
               $("#" + this.datatable.instance + "").DataTable().ajax.reload(null, false);
               this.show_modal_penarikan = false;
+              this.$swal('Suksess', 'Penarikan berhasil di ubah', 'success')
             } else {
               this.$swal('Opss', response.message, 'error')
             }
@@ -136,7 +133,7 @@
         await this.$axios.$get('/penarikan/detail/' + id)
           .then(response => {
             if (response.status) {
-              this.form.id = response.result.id;
+              this.form.id_penarikan = response.result.id_penarikan;
               this.form.blogger = response.result.name;
               this.form.url_blog = response.result.url_blog;
               this.form.saldo = response.result.saldo;

@@ -1,26 +1,22 @@
 <template>
   <div class="content-wrapper" style="min-height: 640px">
     <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"> Campaign Banner</h1>
-          </div>
-          <div class="col-sm-6">
-            <button class="btn btn-primary btn-sm mt-2 pull-right" @click="show_modal_handler">Buat Campaign
-              Banner
-            </button>
-          </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark"> Campaign Banner</h1>
+        </div>
+        <div class="col-sm-6">
+          <button class="btn btn-primary btn-sm mt-2 pull-right" @click="show_modal_handler">Buat Campaign
+            Banner
+          </button>
         </div>
       </div>
     </div>
     <div class="content">
-      <div class="container">
-        <div class="card">
-          <div class="card-body">
-            <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="0" :ajax="datatable.ajax"
-                        :footer="true"></Datatables>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="0" :ajax="datatable.ajax"
+                      :footer="true"></Datatables>
         </div>
       </div>
     </div>
@@ -87,8 +83,8 @@
         datatable: {
           instance: 'tableDataCampaign',
           columns: [
-            {class: 'text-center', orderable: false, searchable: false, data: 'id', title: 'No.'},
-            {data: 'name', title: 'Nama Campaign'},
+            {class: 'text-center', orderable: false, searchable: false, data: 'id_campaign', title: 'No.'},
+            {data: 'campaign_name', title: 'Nama Campaign'},
             {
               data: 'landing_page', title: 'Landing Page',
               render: function (data, type, row, meta) {
@@ -108,7 +104,7 @@
               }
             },
             {
-              class: 'text-center', data: 'id', title: 'Aksi',
+              class: 'text-center', data: 'id_campaign', title: 'Aksi', searchable: false, orderable: false,
               render: function (data, type, row, meta) {
                 return '<button class="btn btn-primary btn-sm btn-secondary edit-action"><i class="fa fa-edit"></i></button>' +
                   '<button class="btn btn-primary btn-sm btn-danger delete-action"><i class="fa fa-trash-o"></i></button>';
@@ -168,14 +164,14 @@
       },
       async editAction(id) {
         this.action_modal = 'Ubah Campaign Banner';
-        await this.$axios.$get('/campaign/detail/'+id)
+        await this.$axios.$get('/campaign/detail/' + id)
           .then(response => {
             if (response.status) {
-                this.form.id = response.result.id;
-                this.form.nama_campaign = response.result.name;
-                this.form.landing_page = response.result.landing_page;
-                this.form.status = response.result.status;
-                this.is_preview = response.result.image
+              this.form.id = response.result.id_campaign;
+              this.form.nama_campaign = response.result.campaign_name;
+              this.form.landing_page = response.result.landing_page;
+              this.form.status = response.result.status;
+              this.is_preview = response.result.image
               this.show_modal_campaign = true;
             } else {
               this.$swal('Opss', response.message, 'error')

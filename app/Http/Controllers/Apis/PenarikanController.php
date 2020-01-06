@@ -51,8 +51,11 @@ class PenarikanController extends Controller
 
     public function detail($id)
     {
-        $penarikan = Penarikan::select('penarikans.*', 'users.name', 'users.url_blog')->leftJoin('users', 'penarikans.user_id', '=', 'users.id_user')
+        $penarikan = Penarikan::select('penarikans.*', 'users.name', 'blogs.url_blog')
+            ->leftJoin('users', 'penarikans.user_id', '=', 'users.id_user')
+            ->leftJoin('blogs', 'penarikans.user_id', '=', 'blogs.id_user')
             ->where('penarikans.id_penarikan', $id)->first();
+
         return Response::toJson($penarikan);
     }
 

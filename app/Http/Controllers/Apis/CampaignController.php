@@ -16,7 +16,7 @@ class CampaignController extends Controller
     public function all(Request $request)
     {
         $campaign = Campaign::select('campaigns.*', 'users.name as user_name')
-            ->leftJoin('users', 'campaigns.created_by', '=', 'users.id_user');
+            ->leftJoin('users', 'campaigns.user_id', '=', 'users.id_user');
 
         return DataTables::of($campaign)->make(true);
     }
@@ -41,11 +41,11 @@ class CampaignController extends Controller
         }
 
         $campaign = new Campaign();
-        $campaign->name = $request->nama_campaign;
+        $campaign->campaign_name = $request->nama_campaign;
         $campaign->landing_page = $request->landing_page;
         $campaign->image = $image;
         $campaign->status = $request->status;
-        $campaign->created_by = Auth::user($request, true);
+        $campaign->user_id = Auth::user($request, true);
         $campaign->save();
 
         return Response::toJson($campaign);
@@ -73,11 +73,11 @@ class CampaignController extends Controller
             $image = url('storage').'/'.$path;
         }
 
-        $campaign->name = $request->nama_campaign;
+        $campaign->campaign_name = $request->nama_campaign;
         $campaign->landing_page = $request->landing_page;
         $campaign->image = $image;
         $campaign->status = $request->status;
-        $campaign->created_by = Auth::user($request, true);
+        $campaign->user_id = Auth::user($request, true);
         $campaign->save();
 
         return Response::toJson($campaign);

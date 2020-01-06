@@ -99,7 +99,9 @@ class AuthController extends Controller
 
     public function blogger(Request $request)
     {
-        $blogger = BloggerViewSummary::select('id_user', 'name', 'blogs.url_blog', 'status', 'total_pendapatan', 'total_klik');
+        $blogger = DB::select('SELECT id_user, name, url_blog, status, total_pendapatan, total_klik
+        FROM affliasi.blogger_view_summary;
+        ');
         return DataTables::of($blogger)->make(true);
     }
 
