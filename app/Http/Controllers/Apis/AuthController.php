@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Helpers\Response;
+use App\Models\Bank;
 use App\Models\Blog;
 use App\Models\BloggerViewSummary;
 use App\Models\User;
@@ -93,11 +94,21 @@ class AuthController extends Controller
 
         $user_id = Auth::user($request, true);
 
-        $user = User::where('id_user', $user_id)->first();
-        $user->rekening_name = $request->rekening_name;
-        $user->rekening_number = $request->rekening_number;
-        $user->rekening_bank = $request->rekening_bank;
-        $user->save();
+        $user = Bank::where('id_user', $user_id)->first();
+        if ($user == null) {
+            $user = new Bank();
+            $user->id_user = $user_id;
+            $user->bank_name = $request->rekening_name;
+            $user->bank_rekening = $request->rekening_number;
+            $user->bank = $request->rekening_bank;
+            $user->save();
+        } else {
+            $user->bank_name = $request->rekening_name;
+            $user->bank_rekening = $request->rekening_number;
+            $user->bank = $request->rekening_bank;
+            $user->save();
+        }
+
 
         return Response::toJson($user);
     }

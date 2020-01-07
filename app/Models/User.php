@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * appends attribute pendapatan
      * @var array
      */
-    public $appends = ['pendapatan', 'role'];
+    public $appends = ['pendapatan', 'role', 'bank'];
 
     /**
      * @return mixed
@@ -58,5 +58,10 @@ class User extends Authenticatable implements JWTSubject
     public function getRoleAttribute() {
         $role_id = Arr::get($this->attributes, 'id_role');
         return Role::where('id_role', $role_id)->first();
+    }
+
+    public function getBankAttribute() {
+        $id_user = Arr::get($this->attributes, 'id_user');
+        return Bank::where('id_user', $id_user)->first();
     }
 }
