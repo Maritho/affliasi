@@ -1,21 +1,17 @@
 <template>
   <div class="content-wrapper" style="min-height: 640px">
     <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"> Blogger</h1>
-          </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark"> Blogger</h1>
         </div>
       </div>
     </div>
     <div class="content">
-      <div class="container">
-        <div class="card">
-          <div class="card-body">
-            <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
-                        :footer="true"></Datatables>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
+                      :footer="true"></Datatables>
         </div>
       </div>
     </div>
@@ -39,13 +35,15 @@
           columns: [
             {class: 'text-center', orderable: false, searchable: false, data: 'id_user', title: 'No.'},
             {data: 'name', title: 'Nama'},
-            {data: 'url_blog', name: 'blogs.url_blog', title: 'URL Blog',
-              render: function ( data, type, row, meta ) {
-                return '<a href="'+data+'">'+data+'</a>';
+            {
+              data: 'url_blog', name: 'blogs.url_blog', title: 'URL Blog',
+              render: function (data, type, row, meta) {
+                return '<a href="' + data + '">' + data + '</a>';
               }
             },
-            {class: 'text-center', data: 'id_user', title: 'Status',
-              render: function ( data, type, row, meta ) {
+            {
+              class: 'text-center', data: 'id_user', title: 'Status',
+              render: function (data, type, row, meta) {
                 if (row.status == 1) {
                   return '<a href="javascript:void(0)" class="badge badge-success edit-status">Aktif</a>';
                 } else {
@@ -55,8 +53,9 @@
             },
             {class: 'text-center', data: 'total_klik', title: 'Total Klik'},
             {class: 'text-center', data: 'total_pendapatan', name: 'users.name', title: 'Total Pendapatan'},
-            {class: 'text-center', data: 'id', title: 'Aksi',
-              render: function ( data, type, row, meta ) {
+            {
+              class: 'text-center', data: 'id_user', title: 'Aksi', searchable: false, orderable: false,
+              render: function (data, type, row, meta) {
                 return '<button class="btn btn-primary btn-sm btn-danger delete-action"><i class="fa fa-trash-o"></i></button>';
               }
             }
@@ -74,7 +73,7 @@
     methods: {
       async editAction(id) {
         this.action_modal = 'Ubah Campaign Banner';
-        await this.$axios.$put('/auth/change-status/'+id)
+        await this.$axios.$put('/auth/change-status/' + id)
           .then(response => {
             if (response.status) {
               $("#" + this.datatable.instance + "").DataTable().ajax.reload(null, false);
@@ -128,7 +127,7 @@
         if (title == 'No.' || title == 'Aksi') {
           elem = '';
         } else if (title == 'Status') {
-          elem = '<select class="form-control form-control-sm">'+
+          elem = '<select class="form-control form-control-sm">' +
             '<option value="">Semua</option>' +
             '<option value="1">Aktif</option>' +
             '<option value="0">Nonaktif</option>' +

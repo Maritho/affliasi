@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use App\Helpers\Auth;
 use App\Http\Controllers\Controller;
 use App\Helpers\Response;
+use App\Models\Blog;
 use App\Models\BloggerViewSummary;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,8 +52,12 @@ class AuthController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->url_blog = $request->url_blog;
         $user->save();
+
+        $blog = new Blog();
+        $blog->id_user = $user->id_user;
+        $blog->url_blog = $request->url_blog;
+        $blog->save();
 
         return Response::toJson($user);
     }
@@ -99,7 +104,9 @@ class AuthController extends Controller
 
     public function blogger(Request $request)
     {
-        $blogger = BloggerViewSummary::select('id_user', 'name', 'blogs.url_blog', 'status', 'total_pendapatan', 'total_klik');
+        $blogger = DB::select('SELECT id_user, name, url_blog, status, total_pendapatan, total_klik
+        FROM affliasi.blogger_view_summary;
+        ');
         return DataTables::of($blogger)->make(true);
     }
 

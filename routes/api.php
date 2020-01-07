@@ -14,6 +14,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 Route::group(['prefix' => 'transaction'], function ($router) {
     Route::get('all', 'Apis\TransactionController@getTansaction');
+    Route::get('tracking', 'Apis\TransactionController@tracking');
+    Route::post('callback', 'Apis\TransactionController@callback');
 });
 
 Route::group(['prefix' => 'penarikan'], function ($router) {
@@ -29,4 +31,5 @@ Route::group(['prefix' => 'campaign'], function ($router) {
     Route::post('update', 'Apis\CampaignController@update');
     Route::delete('{id}', 'Apis\CampaignController@delete');
     Route::get('detail/{id}', 'Apis\CampaignController@detail');
+    Route::get('ads', 'Apis\CampaignController@publicCampaign');
 });

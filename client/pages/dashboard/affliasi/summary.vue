@@ -1,127 +1,124 @@
 <template>
   <div class="content-wrapper">
     <div class="content-header">
-      <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"> Blogger</h1>
-          </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark"> Blogger</h1>
         </div>
       </div>
     </div>
     <div class="content">
-      <div class="container">
-        <div class="card">
-          <div class="card-body shadow">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="row">
-                  <div class="col-lg-3">
-                    <i class="fa fa-user-circle-o" style="font-size: 70px"></i>
-                  </div>
-                  <div class="col-lg-9">
-                    <button class="btn btn-primary btn-sm pull-right" @click="show_modal_penarikan = true">Ajukan
-                      Penarikan
-                    </button>
-                    <div class="font-weight-bold">{{this.$store.state.auth.user.name}}</div>
-                    <div class="font-weight-bold"><a :href="this.$store.state.auth.user.url_blog">{{this.$store.state.auth.user.url_blog}}</a>
-                    </div>
-                    <div class="font-weight-bold">Total Pendapatan</div>
-                    <div class="font-weight-bold">Rp. {{this.$auth.state.user.pendapatan}}</div>
-                  </div>
+      <div class="card">
+        <div class="card-body shadow">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-lg-3">
+                  <i class="fa fa-user-circle-o" style="font-size: 70px"></i>
                 </div>
-              </div>
-              <div class="col-lg-6">
-                <button class="btn btn-primary btn-sm pull-right" @click="show_modal_ubah = true">Ganti Rekening
-                </button>
-                <div class="font-weight-bold">Rekening</div>
-                <div class="font-weight-bold">Atas Nama : {{this.$auth.state.user.rekening_name}}</div>
-                <div class="font-weight-bold">Nomor : {{this.$auth.state.user.rekening_number}}</div>
-                <div class="font-weight-bold">Bank : {{this.$auth.state.user.rekening_bank}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body shadow">
-            <div class="row">
-              <div class="col-lg-6">
-                <h4 class="mb-3 text-dark">Banner Aktif</h4>
-                <div class="card">
-                  <div class="card-body shawdow">
-                    <div class="affiliate-moladin" data-affliate-id="32432434" data-width="200" data-style="img-fluid"
-                         data-height="100"></div>
+                <div class="col-lg-9">
+                  <button class="btn btn-primary btn-sm pull-right" @click="show_modal_penarikan = true">Ajukan
+                    Penarikan
+                  </button>
+                  <div class="font-weight-bold">{{this.$store.state.auth.user.name}}</div>
+                  <div class="font-weight-bold"><a :href="this.$store.state.auth.user.url_blog">{{this.$store.state.auth.user.url_blog}}</a>
                   </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <h4 class="mb-3 text-dark">Embed Kode</h4>
-                <div class="card">
-                  <div class="card-body shawdow">
-                    <div class="form-group">
-                      <textarea rows="5" id="codeSample" readonly v-model="code" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-sm pull-right" @click="copyText">Salin Kode</button>
-                    </div>
-                  </div>
+                  <div class="font-weight-bold">Total Pendapatan</div>
+                  <div class="font-weight-bold">Rp. {{this.$auth.state.user.pendapatan}}</div>
                 </div>
               </div>
             </div>
+            <div class="col-lg-6">
+              <button class="btn btn-primary btn-sm pull-right" @click="show_modal_ubah = true">Ganti Rekening
+              </button>
+              <div class="font-weight-bold">Rekening</div>
+              <div class="font-weight-bold">Atas Nama : {{this.$auth.state.user.rekening_name}}</div>
+              <div class="font-weight-bold">Nomor : {{this.$auth.state.user.rekening_number}}</div>
+              <div class="font-weight-bold">Bank : {{this.$auth.state.user.rekening_bank}}</div>
+            </div>
           </div>
         </div>
-
-        <div class="card">
-          <div class="card-body shadow">
-            <h4 class="mb-3 text-dark">Daftar Transaksi</h4>
-            <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="1" :ajax="datatable.ajax"
-                        :footer="true"></Datatables>
-          </div>
-        </div>
-
-        <Modal :isSmall="true" title="Permintaan Penarikan" v-if="show_modal_penarikan" @close="show_modal_penarikan = false">
-          <form @submit.prevent="validateBeforeSubmitPenarikan">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Jumlah</label>
-                <input type="number" class="form-control" v-model="penarikan.jumlah"
-                       placeholder="Jumlah Yang Akan Ditarik">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="show_modal_penarikan = false">Batal</button>
-              <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
-            </div>
-          </form>
-        </Modal>
-
-        <Modal title="Ubah Rekening" v-if="show_modal_ubah" @close="show_modal_ubah = false">
-          <form @submit.prevent="validateBeforeSubmitRekening">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Nama Rekening</label>
-                <input type="text" class="form-control" v-model="rekenig.rekening_name"
-                       placeholder="Nama Rekening Anda">
-              </div>
-              <div class="form-group">
-                <label>Nomor Rekening</label>
-                <input type="text" class="form-control" v-model="rekenig.rekening_number"
-                       placeholder="Nomor Rekening Anda">
-              </div>
-              <div class="form-group">
-                <label>Bank</label>
-                <input type="text" class="form-control" v-model="rekenig.rekening_bank"
-                       placeholder="Bank Rekening Anda">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="show_modal_ubah = false">Batal</button>
-              <button type="submit" class="btn btn-primary">Ubah</button>
-            </div>
-          </form>
-        </Modal>
-
       </div>
+      <div class="card">
+        <div class="card-body shadow">
+          <div class="row">
+            <div class="col-lg-6">
+              <h4 class="mb-3 text-dark">Banner Aktif</h4>
+              <div class="card">
+                <div class="card-body shawdow">
+                  <div class="affiliate-moladin" data-affliate-id="1" data-width="200" data-style="img-fluid"
+                       data-height="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h4 class="mb-3 text-dark">Embed Kode</h4>
+              <div class="card">
+                <div class="card-body shawdow">
+                  <div class="form-group">
+                    <textarea rows="5" id="codeSample" readonly v-model="code" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-sm pull-right" @click="copyText">Salin Kode</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body shadow">
+          <h4 class="mb-3 text-dark">Daftar Transaksi</h4>
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="1" :ajax="datatable.ajax"
+                      :footer="true"></Datatables>
+        </div>
+      </div>
+
+      <Modal :isSmall="true" title="Permintaan Penarikan" v-if="show_modal_penarikan"
+             @close="show_modal_penarikan = false">
+        <form @submit.prevent="validateBeforeSubmitPenarikan">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Jumlah</label>
+              <input type="number" class="form-control" v-model="penarikan.jumlah"
+                     placeholder="Jumlah Yang Akan Ditarik">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="show_modal_penarikan = false">Batal</button>
+            <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
+          </div>
+        </form>
+      </Modal>
+
+      <Modal title="Ubah Rekening" v-if="show_modal_ubah" @close="show_modal_ubah = false">
+        <form @submit.prevent="validateBeforeSubmitRekening">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Nama Rekening</label>
+              <input type="text" class="form-control" v-model="rekenig.rekening_name"
+                     placeholder="Nama Rekening Anda">
+            </div>
+            <div class="form-group">
+              <label>Nomor Rekening</label>
+              <input type="text" class="form-control" v-model="rekenig.rekening_number"
+                     placeholder="Nomor Rekening Anda">
+            </div>
+            <div class="form-group">
+              <label>Bank</label>
+              <input type="text" class="form-control" v-model="rekenig.rekening_bank"
+                     placeholder="Bank Rekening Anda">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="show_modal_ubah = false">Batal</button>
+            <button type="submit" class="btn btn-primary">Ubah</button>
+          </div>
+        </form>
+      </Modal>
+
     </div>
   </div>
 </template>
@@ -152,7 +149,7 @@
         },
         show_modal_ubah: false,
         show_modal_penarikan: false,
-        code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$auth.state.user.id + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
+        code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$auth.state.user.id_user + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
         datatable: {
           instance: 'tableData',
           columns: [
