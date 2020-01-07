@@ -32,9 +32,9 @@
               <button class="btn btn-primary btn-sm pull-right" @click="show_modal_ubah = true">Ganti Rekening
               </button>
               <div class="font-weight-bold">Rekening</div>
-              <div class="font-weight-bold">Atas Nama : {{this.$store.$auth.state.user.bank.bank_name}}</div>
-              <div class="font-weight-bold">Nomor : {{this.$store.$auth.state.user.bank.bank_rekening}}</div>
-              <div class="font-weight-bold">Bank : {{this.$store.$auth.state.user.bank.bank}}</div>
+              <div class="font-weight-bold">Atas Nama : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_name : ''}}</div>
+              <div class="font-weight-bold">Nomor : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_rekening : ''}}</div>
+              <div class="font-weight-bold">Bank : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank: ''}}</div>
             </div>
           </div>
         </div>
@@ -140,9 +140,9 @@
     data() {
       return {
         rekenig: {
-          rekening_name: this.$store.$auth.state.user.bank.bank_name,
-          rekening_number: this.$store.$auth.state.user.bank.bank_rekening,
-          rekening_bank: this.$store.$auth.state.user.bank.bank
+          rekening_name: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_name : '',
+          rekening_number: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_rekening : null,
+          rekening_bank: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank : ''
         },
         penarikan: {
           jumlah: 0
