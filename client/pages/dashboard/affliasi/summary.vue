@@ -46,7 +46,7 @@
               <h4 class="mb-3 text-dark">Banner Aktif</h4>
               <div class="card">
                 <div class="card-body shawdow">
-                  <div class="affiliate-moladin" data-affliate-id="32432434" data-width="200" data-style="img-fluid"
+                  <div class="affiliate-moladin" data-affliate-id="1" data-width="200" data-style="img-fluid"
                        data-height="100"></div>
                 </div>
               </div>
@@ -149,7 +149,7 @@
         },
         show_modal_ubah: false,
         show_modal_penarikan: false,
-        code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$auth.state.user.id + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
+        code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$auth.state.user.id_user + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
         datatable: {
           instance: 'tableData',
           columns: [

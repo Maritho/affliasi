@@ -14,6 +14,11 @@ use Yajra\DataTables\DataTables;
 
 class PenarikanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function penarikan(Request $request)
     {
         $validator = Validator::make($request->all(), [

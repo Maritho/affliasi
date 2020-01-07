@@ -72,9 +72,9 @@
           </nuxt-link>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
+              <nuxt-link to="/dashboard/affliasi/summary" class="nav-link">
                 <i class="fa fa-user-circle-o"></i> {{ this.$store.state.auth.user.name }}
-              </a>
+              </nuxt-link>
             </li>
             <li class="nav-item">
               <a href="javascript:void(0)" class="nav-link" @click="logout()">

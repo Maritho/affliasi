@@ -80,9 +80,9 @@ export default {
   },
 
   mounted(redirect) {
-    if (this.$auth.$state.loggedIn) {
-      return this.$router.go('/dashboard/affliasi')
-    }
+    // if (this.$auth.$state.loggedIn) {
+    //   return this.$router.go('/dashboard/affliasi')
+    // }
   },
 }
 </script>

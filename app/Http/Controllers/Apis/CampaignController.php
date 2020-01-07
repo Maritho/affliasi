@@ -7,12 +7,26 @@ use App\Helpers\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Validator;
 
 class CampaignController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['publicCampaign']]);
+    }
+
+    public function publicCampaign(Request $request)
+    {
+        $campaign = Campaign::where('status', 1)
+            ->orderBy(DB::raw('RAND()'))
+            ->first();
+        return Response::toJson($campaign);
+    }
+
     public function all(Request $request)
     {
         $campaign = Campaign::select('campaigns.*', 'users.name as user_name')
