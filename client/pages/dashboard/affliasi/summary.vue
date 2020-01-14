@@ -190,7 +190,7 @@
               this.$swal('Sukses', 'Permintaan penarikan berhasil dikirim', 'success');
               this.show_modal_penarikan = false;
               this.$auth.fetchUser()
-              window.open(URL, 'https://api.affliasi.devnas.com/invoice/'+response.id_penarikan);
+              window.open('https://api.affliasi.devnas.com/invoice/'+response.id_penarikan, '_blank');
             } else {
               this.$swal('Opss', response.message, 'error')
             }

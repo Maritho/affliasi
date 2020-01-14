@@ -53,8 +53,8 @@ class PenarikanController extends Controller
             $transaction = new Transaction();
             $transaction->user_id = $p->user_id;
             $transaction->ip = $request->server('SERVER_ADDR');
-            $transaction->total = $p->saldo;
-            $transaction->commision = '-'.$request->jumlah;
+            $transaction->total_belanja = $p->saldo;
+            $transaction->komisi = '-'.$request->jumlah;
             $transaction->cookie = 'sistem';
             $transaction->save();
         }
