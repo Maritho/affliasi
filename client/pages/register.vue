@@ -127,7 +127,7 @@
           }
         }
 
-        xhttp.open("POST", 'https://affliasi.test/api/transaction/callback');
+        xhttp.open("POST", 'https://affliasi.devnas.com/api/transaction/callback');
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(data));
 
