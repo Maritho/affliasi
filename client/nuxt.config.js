@@ -19,7 +19,7 @@ export default {
     ],
     script: [
       {
-        src: '/popper/dist/umd/popper.min.js'
+        src: '/popper/dist/umd/popper.min.js',
       }
     ]
   },

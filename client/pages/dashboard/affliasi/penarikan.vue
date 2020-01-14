@@ -10,7 +10,7 @@
     <div class="content">
       <div class="card">
         <div class="card-body">
-          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :export="['excel']" :order="3" :ajax="datatable.ajax"
                       :footer="true"></Datatables>
         </div>
       </div>

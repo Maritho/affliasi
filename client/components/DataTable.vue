@@ -49,7 +49,9 @@
             },
             serverSide: true,
             processing: true,
-            order: [[this.order, 'desc']]
+            order: [[this.order, 'desc']],
+            dom: 'Bfrtip',
+            buttons: this.export
           },
           {
             ajax: this.ajax,
@@ -65,6 +67,7 @@
       footer: {default: false},
       columns: {type: Array},
       ajax: {default: ""},
+      export: {default: Array},
       options: {}
     },
     mounted() {

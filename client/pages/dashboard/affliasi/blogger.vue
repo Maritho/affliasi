@@ -10,7 +10,7 @@
     <div class="content">
       <div class="card">
         <div class="card-body">
-          <Datatables :instance="datatable.instance" :columns="datatable.columns" :order="3" :ajax="datatable.ajax"
+          <Datatables :instance="datatable.instance" :columns="datatable.columns" :export="['excel']" :order="3" :ajax="datatable.ajax"
                       :footer="true"></Datatables>
         </div>
       </div>
@@ -27,6 +27,30 @@
     components: {
       Datatables,
       Modal
+    },
+    head() {
+      return {
+       script: [
+        {
+          src: 'https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js',
+        },
+         {
+           src: 'https://cdn.datatables.net/buttons/1.6.1/js/buttons.bootstrap4.min.js',
+         },
+        {
+          src: 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
+        },
+        {
+          src: 'https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js',
+        },
+         {
+           src: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'
+         },
+         {
+           src: 'https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js'
+         }
+        ]
+       }
     },
     data() {
       return {
