@@ -187,9 +187,10 @@
         await this.$axios.$post('/penarikan', this.penarikan)
           .then(response => {
             if (response.status) {
-              this.$swal('Sukses', 'Permintaan penarikan berhasil dikirim', 'success')
+              this.$swal('Sukses', 'Permintaan penarikan berhasil dikirim', 'success');
               this.show_modal_penarikan = false;
               this.$auth.fetchUser()
+              window.open(URL, 'https://api.affliasi.devnas.com/invoice/'+response.id_penarikan);
             } else {
               this.$swal('Opss', response.message, 'error')
             }
