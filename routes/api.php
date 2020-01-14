@@ -26,12 +26,12 @@ Route::group(['prefix' => 'penarikan'], function ($router) {
 });
 
 Route::group(['prefix' => 'campaign'], function ($router) {
+    Route::get('ads', 'Apis\CampaignController@publicCampaign');
     Route::get('all', 'Apis\CampaignController@all');
     Route::post('add', 'Apis\CampaignController@add');
     Route::post('update', 'Apis\CampaignController@update');
     Route::delete('{id}', 'Apis\CampaignController@delete');
     Route::get('detail/{id}', 'Apis\CampaignController@detail');
-    Route::get('ads', 'Apis\CampaignController@publicCampaign');
 });
 
 Route::group(['prefix' => 'invoice'], function ($router) {
