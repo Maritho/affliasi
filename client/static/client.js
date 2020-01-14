@@ -1,5 +1,5 @@
 let up = document.getElementsByClassName('affiliate-moladin');
-let host = 'https://affliasi.devnas.com';
+let host = 'https://api.affliasi.devnas.com';
 
 generatorImage()
 
