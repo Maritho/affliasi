@@ -33,3 +33,7 @@ Route::group(['prefix' => 'campaign'], function ($router) {
     Route::get('detail/{id}', 'Apis\CampaignController@detail');
     Route::get('ads', 'Apis\CampaignController@publicCampaign');
 });
+
+Route::group(['prefix' => 'invoice'], function ($router) {
+    Route::get('{id}', 'Apis\PenarikanController@invoice');
+});

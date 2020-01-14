@@ -7,6 +7,7 @@ use App\Helpers\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Penarikan;
 use App\Models\Transaction;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Validator;
@@ -16,7 +17,14 @@ class PenarikanController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['invoice']]);
+    }
+
+    public function invoice(Request $request, $id) {
+        $detail = Penarikan::where('id_penarikan', $id)->with('user')->first();
+
+        $pdf = PDF::loadView('invoice', ['data'=> $detail])->setPaper('a4', 'landscape')->setWarnings(false);
+        return $pdf->stream();
     }
 
     public function penarikan(Request $request)
