@@ -24,7 +24,7 @@
                   <div class="font-weight-bold"><a :href="this.$store.state.auth.user.url_blog">{{this.$store.state.auth.user.url_blog}}</a>
                   </div>
                   <div class="font-weight-bold">Total Pendapatan</div>
-                  <div class="font-weight-bold">Rp. {{this.$auth.state.user.pendapatan}}</div>
+                  <div class="font-weight-bold">Rp. {{this.$store.state.auth.user.pendapatan}}</div>
                 </div>
               </div>
             </div>
@@ -32,9 +32,15 @@
               <button class="btn btn-primary btn-sm pull-right" @click="show_modal_ubah = true">Ganti Rekening
               </button>
               <div class="font-weight-bold">Rekening</div>
-              <div class="font-weight-bold">Atas Nama : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_name : ''}}</div>
-              <div class="font-weight-bold">Nomor : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_rekening : ''}}</div>
-              <div class="font-weight-bold">Bank : {{this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank: ''}}</div>
+              <div class="font-weight-bold">Atas Nama : {{this.$store.state.auth.user.bank ?
+                this.$store.state.auth.user.bank.bank_name : ''}}
+              </div>
+              <div class="font-weight-bold">Nomor : {{this.$store.state.auth.user.bank ?
+                this.$store.state.auth.user.bank.bank_rekening : ''}}
+              </div>
+              <div class="font-weight-bold">Bank : {{this.$store.state.auth.user.bank ?
+                this.$store.state.auth.user.bank.bank: ''}}
+              </div>
             </div>
           </div>
         </div>
@@ -124,115 +130,121 @@
 </template>
 <script>
 
-  import Datatables from "../../../components/DataTable";
-  import Modal from "../../../components/Modal";
+    import Datatables from "../../../components/DataTable";
+    import Modal from "../../../components/Modal";
 
-  export default {
-    head: {
-      script: [
-        {src: '/client.js'}
-      ]
-    },
-    components: {
-      Datatables,
-      Modal
-    },
-    data() {
-      return {
-        rekenig: {
-          rekening_name: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_name : '',
-          rekening_number: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank_rekening : null,
-          rekening_bank: this.$store.$auth.state.user.bank ? this.$store.$auth.state.user.bank.bank : ''
+    export default {
+        head: {
+            script: [
+                {src: '/client.js'},
+            ]
         },
-        penarikan: {
-          jumlah: 0
+        components: {
+            Datatables,
+            Modal
         },
-        show_modal_ubah: false,
-        show_modal_penarikan: false,
-        code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$auth.state.user.id_user + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
-        datatable: {
-          instance: 'tableData',
-          columns: [
-            {class: 'text-center', orderable: false, searchable: false, data: 'id_transaction', title: 'No.'},
-            {class: 'text-center', data: 'ip', title: 'Pengguna'},
-            {class: 'text-center', data: 'created_at', title: 'Tanggal'},
-            {class: 'text-center', data: 'total_belanja', title: 'Total Belanja'},
-            {class: 'text-center', data: 'komisi', title: 'Komisi'},
-            {class: 'text-center', data: 'cookie', title: 'Cookies'}
-          ],
-          ajax: {
-            url: process.env.BASE_URL + "/transaction/all",
-            global: false,
-            headers: {
-              Authorization: this.$auth.getToken("local")
+        data() {
+            return {
+                rekenig: {
+                    rekening_name: this.$store.state.auth.user.bank ? this.$store.state.auth.user.bank.bank_name : '',
+                    rekening_number: this.$store.state.auth.user.bank ? this.$store.state.auth.user.bank.bank_rekening : null,
+                    rekening_bank: this.$store.state.auth.user.bank ? this.$store.state.auth.user.bank.bank : ''
+                },
+                penarikan: {
+                    jumlah: 0
+                },
+                show_modal_ubah: false,
+                show_modal_penarikan: false,
+                code: '// tempelkan di atas </body> \r <script charset="utf-8" src="https://localhost:3000/client.js"/> \r\r // tempelkan di mana anda akan menempatkan banner \r <div class="affiliate-moladin" data-affliate-id="' + this.$store.state.auth.user.id_user + '" data-width="200" data-style="img-fluid" data-height="100"></div>',
+                datatable: {
+                    instance: 'tableData',
+                    columns: [
+                        {
+                            class: 'text-center',
+                            orderable: false,
+                            searchable: false,
+                            data: 'id_transaction',
+                            title: 'No.'
+                        },
+                        {class: 'text-center', data: 'ip', title: 'Pengguna'},
+                        {class: 'text-center', data: 'created_at', title: 'Tanggal'},
+                        {class: 'text-center', data: 'total_belanja', title: 'Total Belanja'},
+                        {class: 'text-center', data: 'komisi', title: 'Komisi'},
+                        {class: 'text-center', data: 'cookie', title: 'Cookies'}
+                    ],
+                    ajax: {
+                        url: process.env.BASE_URL + "/transaction/all",
+                        global: false,
+                        headers: {
+                            Authorization: this.$auth.getToken("local")
+                        }
+                    }
+                }
             }
-          }
+        },
+        methods: {
+            async validateBeforeSubmitRekening() {
+                await this.$axios.$put('/auth/rekening', this.rekenig)
+                    .then(response => {
+                        if (response.status) {
+                            this.$auth.fetchUser()
+                            this.$swal('Sukses', 'Rekening berhasil diubah', 'success')
+                            this.show_modal_ubah = false;
+                        } else {
+                            this.$swal('Opss', response.message, 'error')
+                        }
+                    })
+            },
+            async validateBeforeSubmitPenarikan() {
+                await this.$axios.$post('/penarikan', this.penarikan)
+                    .then(response => {
+                        if (response.status) {
+                            this.$swal('Sukses', 'Permintaan penarikan berhasil dikirim', 'success');
+                            this.show_modal_penarikan = false;
+                            this.$auth.fetchUser()
+                            window.open('https://api.affliasi.devnas.com/api/invoice/' + response.result.id_penarikan, '_blank');
+                        } else {
+                            this.$swal('Opss', response.message, 'error')
+                        }
+                    })
+            },
+            copyText() {
+                let copyText = document.getElementById('codeSample');
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                this.$swal('Sukses', 'Kode berhasil disalin', 'success')
+            }
+        },
+        mounted() {
+            const self = this;
+            const dataTable = $("#" + self.datatable.instance + "").DataTable(this.parameters);
+
+            $("#" + self.datatable.instance + "" + ' tfoot th').each(function () {
+                let title = $(this).text();
+                let elem = '';
+
+                if (title == 'No.' || title == 'Action') {
+                    elem = '';
+                } else {
+                    elem = '<input type="text" class="form-control form-control-sm" placeholder="' + title + '" />';
+                }
+
+                $(this).html(elem);
+
+            });
+
+            dataTable.columns().every(function () {
+                var that = this;
+
+                $('input, select', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
         }
-      }
-    },
-    methods: {
-      async validateBeforeSubmitRekening() {
-        await this.$axios.$put('/auth/rekening', this.rekenig)
-          .then(response => {
-            if (response.status) {
-              this.$auth.fetchUser()
-              this.$swal('Sukses', 'Rekening berhasil diubah', 'success')
-              this.show_modal_ubah = false;
-            } else {
-              this.$swal('Opss', response.message, 'error')
-            }
-          })
-      },
-      async validateBeforeSubmitPenarikan() {
-        await this.$axios.$post('/penarikan', this.penarikan)
-          .then(response => {
-            if (response.status) {
-              this.$swal('Sukses', 'Permintaan penarikan berhasil dikirim', 'success');
-              this.show_modal_penarikan = false;
-              this.$auth.fetchUser()
-              window.open('https://api.affliasi.devnas.com/api/invoice/'+response.result.id_penarikan, '_blank');
-            } else {
-              this.$swal('Opss', response.message, 'error')
-            }
-          })
-      },
-      copyText() {
-        let copyText = document.getElementById('codeSample');
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        this.$swal('Sukses', 'Kode berhasil disalin', 'success')
-      }
-    },
-    mounted() {
-      const self = this;
-      const dataTable = $("#" + self.datatable.instance + "").DataTable(this.parameters);
-
-      $("#" + self.datatable.instance + "" + ' tfoot th').each(function () {
-        let title = $(this).text();
-        let elem = '';
-
-        if (title == 'No.' || title == 'Action') {
-          elem = '';
-        } else {
-          elem = '<input type="text" class="form-control form-control-sm" placeholder="' + title + '" />';
-        }
-
-        $(this).html(elem);
-
-      });
-
-      dataTable.columns().every(function () {
-        var that = this;
-
-        $('input, select', this.footer()).on('keyup change clear', function () {
-          if (that.search() !== this.value) {
-            that
-              .search(this.value)
-              .draw();
-          }
-        });
-      });
     }
-  }
 </script>
